@@ -1,6 +1,6 @@
 let logged = sessionStorage.getItem('logged')
 const session = localStorage.getItem('session')
-const myModal = new bootstrap.Modal('transaction-modal')
+const myModal = new bootstrap.Modal('#transaction-modal')
 let data = {
   transaction: [],
 }
@@ -39,9 +39,9 @@ document
     gettotal()
 
     alert('Lançamento adicionado com sucesso.')
+    checkedLogged();
   })
 
-checkedLogged()
 
 function checkedLogged() {
   if (session) {

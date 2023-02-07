@@ -1,13 +1,14 @@
 let logged = sessionStorage.getItem('logged') || false;
 const session = localStorage.getItem('session') || null;
-const myModal =  new bootstrap.Modal('register-modal');
+const myModal =  new bootstrap.Modal('#register-modal');
 
 //Logar no sistema
 document.getElementById('login-form').addEventListener('submit', function (e) {
   e.preventDefault()
   const email = document.getElementById('email-input').value
   const password = document.getElementById('password-input').value
-  const checkSession = document.getElementById('session-input').checked
+  // const checkSession = document.getElementById('session-input').checked
+  const checkSession = session
   const account = getAccount(email)
 
   if (!account) {
