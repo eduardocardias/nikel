@@ -78,18 +78,16 @@ function getTransactions() {
                 type = "Saída";
             }
 
-                                    <tr>
-                                    <th scope="row">${item.date}</th>
-                                    <td>${item.value.tofixed(2)}</td>
-                                    <td>${type}</td>
-                                    <td>${item.description}</td>
-                                  </tr>
-           `
-    })
-  }
-  document.getElementById('transaction-list').innerHTML = transactionhtml
-}
+            transactionsHtml += `
+            <tr>
+                <th scope="row">${item.date}</th>
+                <td>${item.value.toFixed(2)}</td>
+                <td>${type}</td>
+                <td>${item.description}</td>
+            </tr>
+            `
+        })
+    }
 
-function saveDate(data) {
-  localStorage.setItem(data.login, JSON.stringify(data))
+    document.getElementById("transaction-list").innerHTML = transactionsHtml;
 }
