@@ -143,6 +143,7 @@ function logout() {
   window.location.href = 'index.htm'
 }
 function gettotal() {
+  console.log("transactions home", transactions)
   const transactions = data.transaction
   let total = 0
 
