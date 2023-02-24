@@ -2,7 +2,7 @@ let logged = sessionStorage.getItem('logged')
 const session = localStorage.getItem('session')
 const myModal = new bootstrap.Modal('#transaction-modal')
 let data = {
-  transaction: [],
+  transactions: [],
 }
 
 document.getElementById('button-logout').addEventListener('click', logout)
@@ -14,34 +14,33 @@ document
 
 //adicionar laçamentos
 
-document
-  .getElementById('transaction-form')
-  .addEventListener('submit', function (e) {
-    e.preventDefault()
+document.getElementById('transaction-form').addEventListener('submit', function (e) {
+  e.preventDefault()
 
-    const value = parseFloat(document.getElementById('value-input').value)
-    const description = document.getElementById('description-input').value
-    const date = document.getElementById('date-input').value
-    const type = document.querySelector('input[name="type-input"]:checked').value
+  const value = parseFloat(document.getElementById('value-input').value)
+  const description = document.getElementById('description-input').value
+  const date = document.getElementById('date-input').value
+  const type = document.querySelector('input[name="type-input"]:checked').value
 
-    data.transaction.unshift({
-      value: value,
-      type: type,
-      description: description,
-      date: date,
-    })
-    saveDate(data)
-    e.target.reset()
-    myModal.hide()
-
-    getCashIn()
-    getCashout()
-    gettotal()
-
-    alert('Lançamento adicionado com sucesso.')
-    checkedLogged();
+  data.transactions.unshift({
+    value: value,
+    type: type,
+    description: description,
+    date: date,
   })
 
+  saveDate(data)
+  e.target.reset()
+  myModal.hide()
+
+  getCashIn()
+  getCashout()
+  gettotal()
+
+  alert('Lançamento adicionado com sucesso.')
+})
+
+checkedLogged();
 
 function checkedLogged() {
   if (session) {
@@ -61,9 +60,9 @@ function checkedLogged() {
 }
 
 function getCashIn() {
-  const transaction = data.transactions
+  const transactions = data.transactions
 
-  const cashIn = transaction.filter((item) => item.type === '1')
+  const cashIn = transactions.filter((item) => item.type === '1')
   if (cashIn.length) {
     let cashInhtml = ``
     let limit = 0
@@ -78,8 +77,8 @@ function getCashIn() {
                                 <div class="row mb-4">
                                 <div class="col-12">
                                     <h3 class="fs-2">R$ ${cashIn[
-                                      index
-                                    ].value.toFixed(2)}</h3>
+          index
+        ].value.toFixed(2)}</h3>
                                     <div class="container p-0">
                                       <div class="col-12 col-md-8">
                                        <p> ${cashIn[index].description}</p>
@@ -99,38 +98,34 @@ function getCashIn() {
 }
 
 function getCashout() {
-  const transaction = data.transactions
+  const transactions = data.transactions
 
-  const cashIn = transaction.filter((item) => item.type === '2')
+  const cashIn = transactions.filter((item) => item.type === '2')
   if (cashIn.length) {
     let cashInhtml = ``
     let limit = 0
 
     if (cashIn.length > 5) {
-      let limit = 5
+     limit = 5
     } else {
       limit = cashIn.length
     }
     for (let index = 0; index < limit; index++) {
       cashInhtml += `
-                                <div class="row mb-4">
-                                <div class="col-12">
-                                    <h3 class="fs-2">R$ ${cashIn[
-                                      index
-                                    ].value.toFixed(2)}</h3>
-                                    <div class="container p-0">
-                                      <div class="col-12 col-md-8">
-                                       <p> ${cashIn[index].description}</p>
-                                      </div>
-                                      <div class="col-12 col-md-3 d-flex justify-content-end">
-                                        ${cashIn[index].date}
-
-                                      </div>
-                                    </div>
-                                </div>
-                             </div>
-      
-      `
+      <div class="row mb-4">
+        <div class="col-12">
+          <h3 class="fs-2">R$ ${cashIn[index].value.toFixed(2)}</h3>
+          <div class="container p-0">
+            <div class="col-12 col-md-8">
+              <p> ${cashIn[index].description}</p>
+            </div>
+            <div class="col-12 col-md-3 d-flex justify-content-end">
+              ${cashIn[index].date}
+            </div>
+          </div>
+        </div>
+      </div>
+          `
     }
     document.getElementById('cash-out-list').innerHTML = cashInhtml
   }
@@ -140,11 +135,10 @@ function logout() {
   sessionStorage.removeItem('logged')
   localStorage.removeItem('session')
 
-  window.location.href = 'index.htm'
+  window.location.href = 'index.html'
 }
 function gettotal() {
-  console.log("transactions home", transactions)
-  const transactions = data.transaction
+  const transactions = data.transactions
   let total = 0
 
   transactions.forEach((item) => {
@@ -157,5 +151,6 @@ function gettotal() {
 }
 
 function saveDate(data) {
+
   localStorage.setItem(data.login, JSON.stringify(data))
 }
